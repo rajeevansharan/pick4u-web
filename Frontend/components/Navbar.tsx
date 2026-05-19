@@ -28,17 +28,17 @@ const Navbar = () => {
 
           {/* Nav Links - Desktop */}
           <div className="hidden lg:flex items-center gap-8 text-slate-600 font-medium">
-            <Link href="/" className="text-blue-600 border-b-2 border-blue-600 pb-1">Home</Link>
-            <Link href="/shop" className="hover:text-blue-600 transition-colors">Shop</Link>
-            <div className="flex items-center gap-1 cursor-pointer hover:text-blue-600 transition-colors">
+            <Link href="/" className="text-blue-600 text-sm border-b-2 border-blue-600 pb-1">Home</Link>
+            <Link href="/shop" className="hover:text-blue-600 text-sm transition-colors">Shop</Link>
+            <div className="flex items-center gap-1 cursor-pointer text-sm hover:text-blue-600 transition-colors">
               Categories <ChevronDown size={16} />
             </div>
-            <Link href="/about" className="hover:text-blue-600 transition-colors">About</Link>
-            <Link href="/contact" className="hover:text-blue-600 transition-colors">Contact</Link>
+            <Link href="/about" className="hover:text-blue-600 text-sm transition-colors">About</Link>
+            <Link href="/contact" className="hover:text-blue-600  text-sm transition-colors">Contact</Link>
           </div>
 
           {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-md relative">
+          <div className="hidden md:flex flex-1 max-w-xs relative">
             <input 
               type="text" 
               placeholder="Search products..." 

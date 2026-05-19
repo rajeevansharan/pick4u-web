@@ -5,11 +5,31 @@ import { Send } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+const InstagramIcon = ({ size = 24, ...props }: React.SVGProps<SVGSVGElement> & { size?: number | string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
+const FacebookIcon = ({ size = 24, ...props }: React.SVGProps<SVGSVGElement> & { size?: number | string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const TwitterIcon = ({ size = 24, ...props }: React.SVGProps<SVGSVGElement> & { size?: number | string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+  </svg>
+);
+
 const Footer = () => {
   const socialLinks = [
-    { name: "Instagram", icon: "/icons/instagram.png" },
-    { name: "Facebook", icon: "/icons/instagram.png" },
-    { name: "Twitter", icon: "/icons/instagram.png" }
+    { name: "Instagram", icon: InstagramIcon },
+    { name: "Facebook", icon: FacebookIcon },
+    { name: "Twitter", icon: TwitterIcon }
   ];
 
   return (
@@ -30,17 +50,14 @@ const Footer = () => {
             Your ultimate destination for trending products, exclusive deals, and premium shopping experience.
           </p>
           <div className="flex gap-4">
-            {socialLinks.map((social, i) => (
-              <div key={i} className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-white hover:text-slate-900 cursor-pointer transition-all overflow-hidden relative group/icon">
-                <Image 
-                  src={social.icon} 
-                  alt={social.name} 
-                  width={20}
-                  height={20}
-                  className="object-contain opacity-50 group-hover/icon:opacity-100 transition-opacity invert group-hover/icon:invert-0" 
-                />
-              </div>
-            ))}
+            {socialLinks.map((social, i) => {
+              const Icon = social.icon;
+              return (
+                <div key={i} className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-white hover:text-slate-900 cursor-pointer transition-all overflow-hidden relative group/icon">
+                  <Icon size={20} className="text-slate-400 group-hover/icon:text-slate-900 transition-colors" />
+                </div>
+              );
+            })}
           </div>
         </div>
 

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Search, Heart, ShoppingBag, ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
@@ -17,14 +18,15 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              {/* Simplified logo placeholder */}
-              <svg viewBox="0 0 24 24" className="w-6 h-6 text-orange-600 fill-current">
-                <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-              </svg>
-            </div>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image 
+              src="/logo.svg" 
+              alt="Pick4U Logo" 
+              width={80} 
+              height={80} 
+              className="w-20 h-20 rounded-lg object-contain" 
+            />
+          </Link>
 
           {/* Nav Links - Desktop */}
           <div className="hidden lg:flex items-center gap-8 text-slate-600 font-medium">

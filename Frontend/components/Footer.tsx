@@ -39,11 +39,13 @@ const Footer = () => {
         {/* Brand Column */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-6 h-6 text-orange-600 fill-current">
-                <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-              </svg>
-            </div>
+            <Image 
+              src="/logo.svg" 
+              alt="Pick4U Logo" 
+              width={80} 
+              height={80} 
+              className="w-20 h-20 rounded-lg object-contain" 
+            />
             <span className="text-xl font-bold text-white tracking-widest uppercase">Pick4U</span>
           </div>
           <p className="text-sm leading-relaxed max-w-sm">

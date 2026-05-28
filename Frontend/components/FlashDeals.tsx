@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Zap, Heart, Plus, Star } from "lucide-react";
+import Image from "next/image";
 
 const products = [
   {
@@ -11,7 +12,7 @@ const products = [
     price: 89.00,
     oldPrice: 129.00,
     discount: "-20%",
-    image: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?q=80&w=1957&auto=format&fit=crop",
+    image: "/Pastel Pink Crossbody Bag.avif",
     rating: 4,
     reviews: 24,
     badge: "sale"
@@ -23,7 +24,7 @@ const products = [
     price: 145.00,
     oldPrice: 170.00,
     discount: "-15%",
-    image: "https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1904&auto=format&fit=crop",
+    image: "/Perfumes.avif",
     rating: 5,
     reviews: 42,
     badge: "sale"
@@ -35,7 +36,7 @@ const products = [
     price: 199.00,
     oldPrice: 249.00,
     discount: "HOT",
-    image: "https://images.unsplash.com/photo-1508685096489-77a468d59554?q=80&w=1854&auto=format&fit=crop",
+    image: "/Accessories.avif",
     rating: 4,
     reviews: 56,
     badge: "hot"
@@ -47,7 +48,7 @@ const products = [
     price: 299.00,
     oldPrice: 599.00,
     discount: "-50%",
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop",
+    image: "/Jewelry.avif",
     rating: 5,
     reviews: 18,
     badge: "sale"
@@ -111,10 +112,11 @@ const FlashDeals = () => {
           {products.map((product) => (
             <div key={product.id} className="group relative bg-white border border-slate-100 rounded-3xl p-4 transition-all hover:shadow-2xl hover:shadow-slate-100">
               <div className="bg-slate-50 rounded-2xl h-64 mb-4 relative overflow-hidden flex items-center justify-center">
-                <img 
+                <Image 
                   src={product.image} 
                   alt={product.name} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 
                 {/* Badges */}

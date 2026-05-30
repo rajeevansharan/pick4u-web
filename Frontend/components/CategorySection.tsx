@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
 const categories = [
@@ -31,7 +32,7 @@ const categories = [
   },
 ];
 
-const CategorySection = () => {
+const CategorySection = ({ basePath = "/shop" }: { basePath?: string }) => {
   return (
     <section className="px-4 md:px-8 py-12 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-10">
@@ -48,7 +49,7 @@ const CategorySection = () => {
 
       <div className="flex items-center justify-between gap-6 overflow-x-auto pb-4 scrollbar-hide">
         {categories.map((cat, idx) => (
-          <div key={idx} className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
+          <Link href={`${basePath}?category=${encodeURIComponent(cat.name)}`} key={idx} className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
             <div className={`w-28 h-28 md:w-36 md:h-36 ${cat.color} rounded-full flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-slate-100`}>
               <img 
                 src={cat.icon} 
@@ -59,18 +60,18 @@ const CategorySection = () => {
             <span className="text-sm font-semibold text-slate-600 group-hover:text-blue-600 transition-colors">
               {cat.name}
             </span>
-          </div>
+          </Link>
         ))}
 
         {/* View All */}
-        <div className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
+        <Link href={basePath} className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
           <div className="w-28 h-28 md:w-36 md:h-36 bg-slate-50 rounded-full flex items-center justify-center transition-transform group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white">
             <ArrowRight size={32} className="text-slate-300 group-hover:text-white" />
           </div>
           <span className="text-sm font-semibold text-slate-600 group-hover:text-blue-600 transition-colors">
             View All
           </span>
-        </div>
+        </Link>
       </div>
     </section>
   );

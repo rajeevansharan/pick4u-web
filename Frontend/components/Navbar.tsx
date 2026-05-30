@@ -4,8 +4,17 @@ import React, { useState } from "react";
 import { Search, Heart, ShoppingBag, ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
+  const getLinkClasses = (path: string) => {
+    return pathname === path
+      ? "text-blue-600 text-sm border-b-2 border-blue-600 pb-1"
+      : "hover:text-blue-600 text-sm transition-colors";
+  };
+
   return (
     <div className="w-full">
       {/* Top Announcement Bar */}
@@ -30,13 +39,11 @@ const Navbar = () => {
 
           {/* Nav Links - Desktop */}
           <div className="hidden lg:flex items-center gap-8 text-slate-600 font-medium">
-            <Link href="/" className="text-blue-600 text-sm border-b-2 border-blue-600 pb-1">Home</Link>
-            <Link href="/shop" className="hover:text-blue-600 text-sm transition-colors">Shop</Link>
-            <div className="flex items-center gap-1 cursor-pointer text-sm hover:text-blue-600 transition-colors">
-              Categories <ChevronDown size={16} />
-            </div>
-            <Link href="/about" className="hover:text-blue-600 text-sm transition-colors">About</Link>
-            <Link href="/contact" className="hover:text-blue-600  text-sm transition-colors">Contact</Link>
+            <Link href="/" className={getLinkClasses("/")}>Home</Link>
+            <Link href="/shop" className={getLinkClasses("/shop")}>Shop</Link>
+            <Link href="/categories" className={getLinkClasses("/categories")}>Categories</Link>
+            <Link href="/about" className={getLinkClasses("/about")}>About</Link>
+            <Link href="/contact" className={getLinkClasses("/contact")}>Contact</Link>
           </div>
 
           {/* Search Bar - Desktop */}

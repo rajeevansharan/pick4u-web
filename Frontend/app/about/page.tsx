@@ -41,7 +41,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-slate-100 flex items-center justify-center p-8">
                    <div className="w-full h-full border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 gap-4">
                       <Image 
-                        src="/story-placeholder.png" 
+                        src="/story-placeholderV2.png" 
                         alt="Our Story Workspace"
                         fill
                         className="object-cover"

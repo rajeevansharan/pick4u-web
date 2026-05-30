@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
@@ -21,10 +22,10 @@ const Hero = () => {
           <p className="text-slate-500 text-lg md:text-xl max-w-md mb-8 leading-relaxed">
             Discover our premium selection of bags, accessories, and more at unbeatable prices.
           </p>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold flex items-center gap-2 group transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-blue-200">
+          <Link href="/shop" className="inline-flex bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold items-center gap-2 group transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-blue-200">
             Shop Now
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
         </div>
 
         {/* Hero Image */}

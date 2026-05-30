@@ -1,14 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Grid, List, Heart, Plus, Check } from "lucide-react";
 
-const categories = [
-  { name: "All Products", count: 148, checked: true },
-  { name: "Bags", count: 42, checked: false },
-  { name: "Perfumes", count: 38, checked: false },
-  { name: "Jewelry", count: 26, checked: false },
-  { name: "Accessories", count: 42, checked: false },
+const categoriesList = [
+  { name: "All Products", count: 148 },
+  { name: "Bags", count: 42 },
+  { name: "Perfumes", count: 38 },
+  { name: "Jewelry", count: 26 },
+  { name: "Accessories", count: 42 },
 ];
 
 const products = [
@@ -22,7 +25,7 @@ const products = [
     reviews: 24,
     badge: "-30%",
     badgeColor: "bg-pink-500",
-    image: "/placeholder-bag.png", // Image component skipped for now since there's no real asset
+    image: "/placeholder-bag.png",
     addedToCart: false,
   },
   {
@@ -50,7 +53,47 @@ const products = [
   },
 ];
 
-export default function Shop() {
+function ShopContent() {
+  const searchParams = useSearchParams();
+  const categoryQuery = searchParams.get("category");
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    categoryQuery ? [categoryQuery] : ["All Products"]
+  );
+
+  useEffect(() => {
+    if (categoryQuery && categoriesList.some(c => c.name === categoryQuery)) {
+      setSelectedCategories([categoryQuery]);
+    }
+  }, [categoryQuery]);
+
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(500);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+
+  const toggleCategory = (name: string) => {
+    if (name === "All Products") {
+      setSelectedCategories(["All Products"]);
+      return;
+    }
+    
+    setSelectedCategories(prev => {
+      const withoutAll = prev.filter(p => p !== "All Products");
+      if (withoutAll.includes(name)) {
+        const remaining = withoutAll.filter(p => p !== name);
+        return remaining.length === 0 ? ["All Products"] : remaining;
+      } else {
+        return [...withoutAll, name];
+      }
+    });
+  };
+
+  const toggleStatus = (status: string) => {
+    setSelectedStatuses(prev => 
+      prev.includes(status) ? prev.filter(s => s !== status) : [...prev, status]
+    );
+  };
+
   return (
     <main className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <Navbar />
@@ -78,26 +121,26 @@ export default function Shop() {
               <div>
                 <h3 className="font-bold text-slate-900 mb-4">Categories</h3>
                 <ul className="flex flex-col gap-3">
-                  {categories.map(cat => (
-                    <li key={cat.name} className="flex items-center justify-between text-sm">
-                      <label className="flex items-center gap-3 cursor-pointer">
-                        <input 
-                           type="checkbox" 
-                           checked={cat.checked}
-                           readOnly
-                           className="w-4 h-4 rounded border border-slate-300 text-blue-600 focus:ring-blue-500 appearance-none bg-white checked:bg-blue-600 checked:border-blue-600 grid place-content-center relative cursor-pointer"
-                        />
-                        {/* Custom Checkmark implementation since appearance-none deletes default */}
-                        {cat.checked && (
-                           <svg viewBox="0 0 24 24" className="w-3 h-3 text-white absolute left-[4.5px] pointer-events-none" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="20 6 9 17 4 12"></polyline>
-                           </svg>
-                        )}
-                        <span className={`${cat.checked ? 'text-slate-900 font-medium' : 'text-slate-600'}`}>{cat.name}</span>
-                      </label>
-                      <span className="text-slate-400 text-xs">({cat.count})</span>
-                    </li>
-                  ))}
+                  {categoriesList.map(cat => {
+                    const isChecked = selectedCategories.includes(cat.name);
+                    return (
+                      <li key={cat.name} className="flex items-center justify-between text-sm">
+                        <label className="flex items-center gap-3 cursor-pointer relative">
+                          <input 
+                             type="checkbox" 
+                             checked={isChecked}
+                             onChange={() => toggleCategory(cat.name)}
+                             className="w-4 h-4 rounded border border-slate-300 focus:ring-blue-500 appearance-none bg-white checked:bg-blue-600 checked:border-blue-600 cursor-pointer"
+                          />
+                          {isChecked && (
+                             <Check size={12} className="text-white absolute left-[2px] top-[2px] pointer-events-none stroke-[3]" />
+                          )}
+                          <span className={`${isChecked ? 'text-slate-900 font-medium' : 'text-slate-600'}`}>{cat.name}</span>
+                        </label>
+                        <span className="text-slate-400 text-xs">({cat.count})</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -105,20 +148,59 @@ export default function Shop() {
               <div>
                 <h3 className="font-bold text-slate-900 mb-4">Price Range</h3>
                 <div className="mb-6">
-                   {/* Custom Slider Track */}
-                   <div className="h-1 bg-slate-200 rounded-full relative mb-4">
-                     <div className="absolute left-0 w-1/2 h-full bg-blue-500 rounded-full"></div>
-                     <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-2 border-white shadow-sm cursor-grab"></div>
+                   {/* Custom Dual Slider Track */}
+                   <div className="relative h-6 flex items-center mb-4">
+                     {/* Background track */}
+                     <div className="absolute w-full h-1 bg-slate-200 rounded-full"></div>
+                     {/* Active track */}
+                     <div 
+                       className="absolute h-1 bg-blue-600 rounded-full" 
+                       style={{ left: `${(minPrice / 1000) * 100}%`, right: `${100 - (maxPrice / 1000) * 100}%` }}
+                     ></div>
+                     {/* Min thumb */}
+                     <input 
+                       type="range" 
+                       min="0" 
+                       max="1000" 
+                       value={minPrice} 
+                       onChange={e => {
+                         const val = Math.min(Number(e.target.value), maxPrice - 10);
+                         setMinPrice(val);
+                       }} 
+                       className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-grab hover:[&::-webkit-slider-thumb]:scale-110 transition-transform" 
+                     />
+                     {/* Max thumb */}
+                     <input 
+                       type="range" 
+                       min="0" 
+                       max="1000" 
+                       value={maxPrice} 
+                       onChange={e => {
+                         const val = Math.max(Number(e.target.value), minPrice + 10);
+                         setMaxPrice(val);
+                       }} 
+                       className="absolute w-full appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-grab hover:[&::-webkit-slider-thumb]:scale-110 transition-transform" 
+                     />
                    </div>
                    <div className="flex items-center justify-between gap-4">
                      <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2 flex-1">
                        <span className="text-slate-400 text-sm">$</span>
-                       <input type="text" value="0" readOnly className="w-full bg-transparent text-sm text-slate-700 outline-none" />
+                       <input 
+                         type="number" 
+                         value={minPrice} 
+                         onChange={(e) => setMinPrice(Number(e.target.value))}
+                         className="w-full bg-transparent text-sm text-slate-700 outline-none" 
+                       />
                      </div>
                      <span className="text-slate-400">-</span>
                      <div className="flex items-center gap-2 border border-slate-200 rounded-lg px-3 py-2 flex-1">
                        <span className="text-slate-400 text-sm">$</span>
-                       <input type="text" value="500" readOnly className="w-full bg-transparent text-sm text-slate-700 outline-none" />
+                       <input 
+                         type="number" 
+                         value={maxPrice} 
+                         onChange={(e) => setMaxPrice(Number(e.target.value))}
+                         className="w-full bg-transparent text-sm text-slate-700 outline-none" 
+                       />
                      </div>
                    </div>
                 </div>
@@ -128,14 +210,25 @@ export default function Shop() {
               <div>
                 <h3 className="font-bold text-slate-900 mb-4">Status</h3>
                 <ul className="flex flex-col gap-3">
-                  {['Trending', 'On Sale', 'Newest'].map(status => (
-                    <li key={status} className="flex items-center text-sm">
-                      <label className="flex items-center gap-3 cursor-pointer relative">
-                        <input type="checkbox" className="w-4 h-4 rounded border border-slate-300 text-blue-600 focus:ring-blue-500 appearance-none bg-white checked:bg-blue-600 checked:border-blue-600 cursor-pointer" />
-                        <span className="text-slate-600">{status}</span>
-                      </label>
-                    </li>
-                  ))}
+                  {['Trending', 'On Sale', 'Newest'].map(status => {
+                    const isChecked = selectedStatuses.includes(status);
+                    return (
+                      <li key={status} className="flex items-center text-sm">
+                        <label className="flex items-center gap-3 cursor-pointer relative">
+                          <input 
+                            type="checkbox" 
+                            checked={isChecked}
+                            onChange={() => toggleStatus(status)}
+                            className="w-4 h-4 rounded border border-slate-300 focus:ring-blue-500 appearance-none bg-white checked:bg-blue-600 checked:border-blue-600 cursor-pointer" 
+                          />
+                          {isChecked && (
+                             <Check size={12} className="text-white absolute left-[2px] top-[2px] pointer-events-none stroke-[3]" />
+                          )}
+                          <span className={`${isChecked ? 'text-slate-900 font-medium' : 'text-slate-600'}`}>{status}</span>
+                        </label>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -275,5 +368,13 @@ export default function Shop() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function Shop() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 flex items-center justify-center font-semibold text-slate-500">Loading shop...</div>}>
+      <ShopContent />
+    </Suspense>
   );
 }

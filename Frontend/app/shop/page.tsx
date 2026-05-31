@@ -239,8 +239,8 @@ function ShopContent() {
           <div className="flex-1">
             
             {/* Toolbar */}
-            <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-slate-100 mb-6">
-              <div className="flex gap-1">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white p-2 rounded-xl shadow-sm border border-slate-100 mb-6 gap-4 sm:gap-0">
+              <div className="flex gap-1 w-full sm:w-auto border-b sm:border-0 border-slate-100 pb-3 sm:pb-0">
                 <button className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                   <Grid size={18} />
                 </button>
@@ -248,7 +248,7 @@ function ShopContent() {
                   <List size={18} />
                 </button>
               </div>
-              <div className="flex items-center gap-3 px-3">
+              <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-3 px-1 sm:px-3">
                 <span className="text-sm text-slate-500">Sort By:</span>
                 <select className="text-sm font-medium text-slate-900 bg-transparent outline-none cursor-pointer">
                   <option>Featured</option>

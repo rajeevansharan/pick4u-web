@@ -47,10 +47,10 @@ const CategorySection = ({ basePath = "/shop" }: { basePath?: string }) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-6 overflow-x-auto pb-4 scrollbar-hide">
+      <div className="flex items-center justify-center flex-wrap gap-4 sm:gap-6 pb-4">
         {categories.map((cat, idx) => (
           <Link href={`${basePath}?category=${encodeURIComponent(cat.name)}`} key={idx} className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
-            <div className={`w-28 h-28 md:w-36 md:h-36 ${cat.color} rounded-full flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-slate-100`}>
+            <div className={`w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 ${cat.color} rounded-full flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-slate-100`}>
               <img 
                 src={cat.icon} 
                 className="w-[70%] h-[70%] object-cover rounded-xl group-hover:rotate-6 transition-transform" 
@@ -65,7 +65,7 @@ const CategorySection = ({ basePath = "/shop" }: { basePath?: string }) => {
 
         {/* View All */}
         <Link href={basePath} className="flex flex-col items-center gap-4 flex-shrink-0 group cursor-pointer">
-          <div className="w-28 h-28 md:w-36 md:h-36 bg-slate-50 rounded-full flex items-center justify-center transition-transform group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 bg-slate-50 rounded-full flex items-center justify-center transition-transform group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white">
             <ArrowRight size={32} className="text-slate-300 group-hover:text-white" />
           </div>
           <span className="text-sm font-semibold text-slate-600 group-hover:text-blue-600 transition-colors">

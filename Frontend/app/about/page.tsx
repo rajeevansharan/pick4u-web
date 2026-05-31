@@ -20,7 +20,7 @@ export default function About() {
           <span className="text-orange-500 font-bold tracking-widest uppercase text-[10px] mb-6 border border-orange-200 bg-orange-50 px-4 py-1.5 rounded-full">
             About Pick4U
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
             Your Choice,<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">Your</span>{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">Deals</span>

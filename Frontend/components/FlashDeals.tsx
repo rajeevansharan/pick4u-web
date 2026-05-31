@@ -84,7 +84,7 @@ const FlashDeals = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-6 justify-center">
             <div className="flex flex-col items-center">
               <div className="bg-slate-900 text-white w-12 h-12 rounded-lg flex items-center justify-center font-bold text-xl mb-1">
                 {String(timeLeft.hrs).padStart(2, '0')}

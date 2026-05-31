@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const getLinkClasses = (path: string) => {
     return pathname === path
       ? "text-blue-600 text-sm border-b-2 border-blue-600 pb-1"
@@ -66,11 +68,31 @@ const Navbar = () => {
               <ShoppingBag size={24} className="text-slate-600" />
               <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">3</span>
             </div>
-            <button className="lg:hidden text-slate-600">
+            <button className="lg:hidden text-slate-600" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               <Menu size={24} />
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden mt-4 pt-4 border-t border-slate-100 flex flex-col gap-4">
+            <Link href="/" className={getLinkClasses("/")} onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
+            <Link href="/shop" className={getLinkClasses("/shop")} onClick={() => setIsMobileMenuOpen(false)}>Shop</Link>
+            <Link href="/categories" className={getLinkClasses("/categories")} onClick={() => setIsMobileMenuOpen(false)}>Categories</Link>
+            <Link href="/about" className={getLinkClasses("/about")} onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+            <Link href="/contact" className={getLinkClasses("/contact")} onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
+            
+            <div className="relative mt-2">
+              <input 
+                type="text" 
+                placeholder="Search products..." 
+                className="w-full bg-slate-50 border border-slate-200 rounded-full px-5 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm"
+              />
+              <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            </div>
+          </div>
+        )}
       </nav>
     </div>
   );

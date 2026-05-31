@@ -38,16 +38,14 @@ export default function About() {
           <div className="w-full md:w-1/2">
              <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl shadow-pink-500/10 transform -rotate-2 hover:rotate-0 transition-transform duration-500 bg-white">
                 {/* Fallback pattern if Image is not present */}
-                <div className="absolute inset-0 bg-slate-100 flex items-center justify-center p-8">
-                   <div className="w-full h-full border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center text-slate-400 gap-4">
+                <div className="absolute inset-0 bg-slate-100 flex items-center justify-center">
+                   <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 gap-4">
                       <Image 
                         src="/story-placeholderV2.png" 
                         alt="Our Story Workspace"
                         fill
                         className="object-cover"
                       />
-                      <span className="z-10 uppercase tracking-widest text-xs font-bold relative mix-blend-difference">Image Mockup</span>
-                      <p className="z-10 text-[10px] text-center max-w-xs relative mix-blend-difference">Replace with `/public/story-placeholder.png`</p>
                    </div>
                 </div>
              </div>

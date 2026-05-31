@@ -22,7 +22,7 @@ const categories = [
   },
   { 
     name: "Cups", 
-    icon: "https://images.unsplash.com/photo-1517256011271-bfca2053974d?q=80&w=1887&auto=format&fit=crop", 
+    icon:"cup.jpg",
     color: "bg-purple-50" 
   },
   { 
